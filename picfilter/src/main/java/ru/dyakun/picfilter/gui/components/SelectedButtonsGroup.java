@@ -6,16 +6,16 @@ import java.util.List;
 
 public class SelectedButtonsGroup {
 
-    private final List<JToggleButton> buttons = new ArrayList<>();
+    private final List<AbstractButton> buttons = new ArrayList<>();
     private final boolean initial;
 
     public SelectedButtonsGroup(boolean initial) {
         this.initial = initial;
     }
 
-    public void add(JToggleButton toggleButton) {
-        toggleButton.setSelected(initial);
-        buttons.add(toggleButton);
+    public void add(AbstractButton button) {
+        button.setSelected(initial);
+        buttons.add(button);
     }
 
     public void setSelected(boolean val) {
