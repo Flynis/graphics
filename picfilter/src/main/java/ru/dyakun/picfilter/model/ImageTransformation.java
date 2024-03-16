@@ -5,6 +5,6 @@ import java.awt.image.BufferedImage;
 @FunctionalInterface
 public interface ImageTransformation {
 
-    BufferedImage apply(BufferedImage src, BufferedImage dst);
+    BufferedImage apply(BorderImage src, BufferedImage dst);
 
 }

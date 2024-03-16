@@ -12,6 +12,7 @@ public class ImageManager {
 
     private BufferedImage current = null;
     private BufferedImage source = null;
+    private BorderImage buffer = null;
     private boolean isEmptyCurrent = true;
     private final List<ImageListener> listeners = new ArrayList<>();
 
@@ -28,7 +29,7 @@ public class ImageManager {
     }
 
     public void transformImage(ImageTransformation transformation) {
-        current = transformation.apply(source, current);
+        current = transformation.apply(buffer, current);
         isEmptyCurrent = false;
         for(var listener: listeners) {
             listener.onChange(current);
@@ -38,6 +39,7 @@ public class ImageManager {
     public void loadImage(File file) throws IOException {
         source = ImageIO.read(file);
         current = new BufferedImage(source.getWidth(), source.getHeight(), Image.SCALE_DEFAULT);
+        buffer = new BorderImage(source);
         System.out.println("Load image " + source.getWidth() + "x" + source.getHeight());
         isEmptyCurrent = true;
         for(var listener: listeners) {

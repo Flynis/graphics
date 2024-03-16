@@ -1,4 +1,4 @@
-package ru.dyakun.picfilter.gui.components;
+package ru.dyakun.picfilter.gui;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

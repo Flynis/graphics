@@ -1,6 +1,5 @@
 package ru.dyakun.picfilter.gui;
 
-import ru.dyakun.picfilter.gui.components.ReflectionUtil;
 import ru.dyakun.picfilter.gui.components.dialog.PropertiesDialog;
 import ru.dyakun.picfilter.model.ImageManager;
 import ru.dyakun.picfilter.model.ImageTransformation;

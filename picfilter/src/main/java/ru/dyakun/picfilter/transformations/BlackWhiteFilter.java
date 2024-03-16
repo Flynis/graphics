@@ -1,5 +1,6 @@
 package ru.dyakun.picfilter.transformations;
 
+import ru.dyakun.picfilter.model.BorderImage;
 import ru.dyakun.picfilter.model.ImageTransformation;
 
 import java.awt.image.BufferedImage;
@@ -7,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class BlackWhiteFilter implements ImageTransformation {
 
     @Override
-    public BufferedImage apply(BufferedImage src, BufferedImage dst) {
+    public BufferedImage apply(BorderImage src, BufferedImage dst) {
         double r = 0.299;
         double g = 0.587;
         double b = 1.0 - r - g;
