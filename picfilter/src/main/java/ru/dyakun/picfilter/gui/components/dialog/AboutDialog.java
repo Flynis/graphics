@@ -1,6 +1,7 @@
-package ru.dyakun.picfilter.gui.components;
+package ru.dyakun.picfilter.gui.components.dialog;
 
 import com.github.rjeschke.txtmark.Processor;
+import ru.dyakun.picfilter.gui.components.WidgetKit;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +36,7 @@ public class AboutDialog extends Dialog {
             editor.setText(html);
         } catch (IOException e) {
             System.out.println("Failed to load " + filename);
-            editor.setText("<h1>Paint</h1>");
+            editor.setText("<h1>Picture filter</h1>");
         }
 
         JPanel buttons = WidgetKit.createConfirmButtonsPane(e -> hide());

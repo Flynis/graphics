@@ -1,4 +1,4 @@
-package ru.dyakun.picfilter.gui.components;
+package ru.dyakun.picfilter.gui.components.dialog;
 
 import javax.swing.*;
 

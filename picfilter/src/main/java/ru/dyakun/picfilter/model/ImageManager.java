@@ -27,7 +27,7 @@ public class ImageManager {
         listeners.add(listener);
     }
 
-    public void applyFilter(ImageTransformation transformation) {
+    public void transformImage(ImageTransformation transformation) {
         current = transformation.apply(source, current);
         isEmptyCurrent = false;
         for(var listener: listeners) {

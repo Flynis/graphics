@@ -1,17 +1,16 @@
-package ru.dyakun.picfilter.gui.components;
+package ru.dyakun.picfilter.model.proprerty;
 
-public class IntegerProperty {
+public class IntegerProperty extends Property {
 
     private int val;
     private final int max;
     private final int min;
-    private final String name;
 
     public IntegerProperty(int val, int min, int max, String name) {
+        super(name);
         this.val = val;
         this.min = min;
         this.max = max;
-        this.name = name;
     }
 
     public int getVal() {
@@ -26,10 +25,6 @@ public class IntegerProperty {
             val = max;
         }
         this.val = val;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public int getMax() {
