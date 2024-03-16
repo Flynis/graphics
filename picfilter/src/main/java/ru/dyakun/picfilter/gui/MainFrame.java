@@ -26,8 +26,10 @@ public class MainFrame extends JFrame {
     }
 
     private void createUI() {
-        DisplayArea displayArea = new DisplayArea(5);
         JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBorder(null);
+
+        DisplayArea displayArea = new DisplayArea(5);
         displayArea.add(scrollPane);
         add(displayArea);
 

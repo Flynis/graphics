@@ -10,7 +10,6 @@ public class ImageObserver implements ImageListener {
 
     private final ImageViewer viewer;
     private boolean fitScreen = false;
-    private boolean showSource = false;
     private final ImageManager manager;
 
     public ImageObserver(ImageViewer viewer, ImageManager manager) {
@@ -29,12 +28,10 @@ public class ImageObserver implements ImageListener {
     }
 
     public void showSource() {
-        showSource = true;
-        viewer.setImage(manager.getPrevious(), fitScreen);
+        viewer.setImage(manager.getSource(), fitScreen);
     }
 
     public void hideSource() {
-        showSource = false;
         viewer.setImage(manager.getCurrent(), fitScreen);
     }
 
@@ -45,8 +42,8 @@ public class ImageObserver implements ImageListener {
 
     @Override
     public void onSourceChange(BufferedImage image) {
-        showSource = false;
-        viewer.setImage(manager.getCurrent(), fitScreen);
+        fitScreen = false;
+        viewer.setImage(manager.getSource(), fitScreen);
     }
 
 }

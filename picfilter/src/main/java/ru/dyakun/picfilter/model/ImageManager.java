@@ -1,9 +1,8 @@
 package ru.dyakun.picfilter.model;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,35 +11,25 @@ import java.util.List;
 public class ImageManager {
 
     private BufferedImage current = null;
-    private BufferedImage previous = null;
     private BufferedImage source = null;
+    private boolean isEmptyCurrent = true;
     private final List<ImageListener> listeners = new ArrayList<>();
-    private final List<Filter> appliedFilters = new ArrayList<>();
-    private Filter last = null;
 
     public BufferedImage getCurrent() {
-        return current;
+        return (isEmptyCurrent) ? source : current;
     }
 
-    public BufferedImage getPrevious() {
-        return previous;
+    public BufferedImage getSource() {
+        return source;
     }
 
     public void addImageListener(ImageListener listener) {
         listeners.add(listener);
     }
 
-    public void confirmFilter() {
-        if(last != null) {
-            appliedFilters.add(last);
-            last = null;
-            previous = current;
-        }
-    }
-
-    public void applyFilter(Filter filter) {
-        last = filter;
-        current = filter.apply(source, current);
+    public void applyFilter(ImageTransformation transformation) {
+        current = transformation.apply(source, current);
+        isEmptyCurrent = false;
         for(var listener: listeners) {
             listener.onChange(current);
         }
@@ -48,27 +37,20 @@ public class ImageManager {
 
     public void loadImage(File file) throws IOException {
         source = ImageIO.read(file);
-        current = deepCopy(source);
-        previous = source;
+        current = new BufferedImage(source.getWidth(), source.getHeight(), Image.SCALE_DEFAULT);
+        System.out.println("Load image " + source.getWidth() + "x" + source.getHeight());
+        isEmptyCurrent = true;
         for(var listener: listeners) {
             listener.onSourceChange(current);
         }
     }
 
     public void exportImageToPng(File file) throws IOException {
-        BufferedImage img = deepCopy(source);
-        BufferedImage prev = source;
-        for(var filter: appliedFilters) {
-            img = filter.apply(prev, img);
+        if(source == null) {
+            return;
         }
+        BufferedImage img = (current == null) ? source : current;
         ImageIO.write(img, "png", file);
-    }
-
-    private static BufferedImage deepCopy(BufferedImage image) {
-        ColorModel model = image.getColorModel();
-        boolean isAlphaPremultiplied = model.isAlphaPremultiplied();
-        WritableRaster raster = image.copyData(null);
-        return new BufferedImage(model, raster, isAlphaPremultiplied, null);
     }
 
 }
