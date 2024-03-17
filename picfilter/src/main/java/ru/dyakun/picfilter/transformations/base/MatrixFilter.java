@@ -53,10 +53,10 @@ public class MatrixFilter implements ChannelProcessor {
         return round(sum / div);
     }
 
-    protected BufferedImage applyKernel(int size, int div, BorderImage src, BufferedImage dst) {
+    protected BufferedImage applyKernel(int size, int div, boolean ignoreDisabledChannels, BorderImage src, BufferedImage dst) {
         this.size = size;
         this.div = div;
-        return applyByChannels(this, src, dst);
+        return applyByChannels(this, ignoreDisabledChannels, src, dst);
     }
 
 }

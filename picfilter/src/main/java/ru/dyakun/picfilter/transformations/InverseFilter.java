@@ -10,7 +10,7 @@ public class InverseFilter implements ImageTransformation, ChannelProcessor {
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
-        return TransformationUtil.applyByChannels(this, src, dst);
+        return TransformationUtil.applyByChannels(this, false, src, dst);
     }
 
     @Override

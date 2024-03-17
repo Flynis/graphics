@@ -32,7 +32,7 @@ public class PropertiesDialog extends Dialog {
         JPanel gridPanel = new JPanel(new BorderLayout());
         gridPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        JPanel grid = new JPanel(new MigLayout("fillx", "[right]5[50, fill]5[grow,fill]", ""));
+        JPanel grid = new JPanel(new MigLayout("fillx, wrap 3", "[right]5[50, fill]5[grow,fill]", ""));
         for(var prop: properties) {
             PropEditPane editPane = PropEditPaneFactory.create(prop);
             editPanes.add(editPane);

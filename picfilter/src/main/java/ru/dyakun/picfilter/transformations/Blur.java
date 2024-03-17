@@ -35,11 +35,11 @@ public class Blur extends MatrixFilter implements ImageTransformation {
         switch (size) {
             case 3 -> {
                 kernel.copy(kernel3);
-                return applyKernel(size, 6, src, dst);
+                return applyKernel(size, 6, false, src, dst);
             }
             case 5 -> {
                 kernel.copy(kernel5);
-                return applyKernel(size, 351, src, dst);
+                return applyKernel(size, 351,false, src, dst);
             }
             default -> {
                 for(int y = 0; y < size; y++) {
@@ -47,7 +47,7 @@ public class Blur extends MatrixFilter implements ImageTransformation {
                         kernel.set(x, y, 1, size);
                     }
                 }
-                return applyKernel(size, size * size, src, dst);
+                return applyKernel(size, size * size, false, src, dst);
             }
         }
     }

@@ -13,14 +13,16 @@ public class Sharpen extends MatrixFilter implements ImageTransformation {
             -1,  9, -1,
             -1, -1, -1 };
 
+    private static final int size = 3;
+
     public Sharpen() {
-        super(3);
+        super(size);
         kernel.copy(kernel3);
     }
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
-        return applyKernel(3, 1, src, dst);
+        return applyKernel(size, 1, false, src, dst);
     }
 
 }

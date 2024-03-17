@@ -22,41 +22,22 @@ public class TransformationUtil {
     }
 
     public static BufferedImage applyByChannels(ChannelProcessor processor,
+                                                boolean ignoreDisabledChannels,
                                                 BorderImage src,
                                                 BufferedImage dst) {
         ChannelsObserver observer = ChannelsObserver.getInstance();
+        boolean redEnabled = observer.red() || ignoreDisabledChannels;
+        boolean greenEnabled = observer.green() || ignoreDisabledChannels;
+        boolean blueEnabled = observer.blue() || ignoreDisabledChannels;
         int alpha = 0xFF;
-        if(observer.red()) {
-            for(int y = 0; y < src.getHeight(); y++) {
-                for(int x = 0; x < src.getWidth(); x++) {
-                    int p = src.getRGB(x, y);
-                    int red = processor.red(x, y, src, dst);
-                    int c = (alpha << 24) + (red << 16) + (p & 0x00FFFF);
-                    dst.setRGB(x, y, c);
-                }
-            }
-        }
-        if(observer.green()) {
-            for(int y = 0; y < src.getHeight(); y++) {
-                for(int x = 0; x < src.getWidth(); x++) {
-                    int p = src.getRGB(x, y);
-                    int red = (((observer.red()) ? dst.getRGB(x, y) : p) >> 16) & 0xFF;
-                    int green = processor.green(x, y, src, dst);
-                    int c = (alpha << 24) + (red << 16) + (green << 8) + (p & 0xFF);
-                    dst.setRGB(x, y, c);
-                }
-            }
-        }
-        if(observer.blue()) {
-            for(int y = 0; y < src.getHeight(); y++) {
-                for(int x = 0; x < src.getWidth(); x++) {
-                    int p = src.getRGB(x, y);
-                    int red = (((observer.red()) ? dst.getRGB(x, y) : p) >> 16) & 0xFF;
-                    int green = (((observer.green()) ? dst.getRGB(x, y) : p) >> 8) & 0xFF;
-                    int blue = processor.blue(x, y, src, dst);
-                    int c = (alpha << 24) + (red << 16) + (green << 8) + blue;
-                    dst.setRGB(x, y, c);
-                }
+        for(int y = 0; y < src.getHeight(); y++) {
+            for(int x = 0; x < src.getWidth(); x++) {
+                int p = src.getRGB(x, y);
+                int red = redEnabled ? processor.red(x, y, src, dst) : ((p >> 16) & 0xFF);
+                int green = greenEnabled ? processor.green(x, y, src, dst) : ((p >> 8) & 0xFF);
+                int blue = blueEnabled ? processor.blue(x, y, src, dst) : (p & 0xFF);
+                int c = (alpha << 24) + (red << 16) + (green << 8) + blue;
+                dst.setRGB(x, y, c);
             }
         }
         return dst;
