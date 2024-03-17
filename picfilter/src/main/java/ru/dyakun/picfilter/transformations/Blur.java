@@ -13,7 +13,7 @@ public class Blur extends MatrixFilter implements ImageTransformation {
 
     private static final int[] kernel3 = {
             0, 1, 0,
-            2, 2, 1,
+            1, 2, 1,
             0, 1, 0 };
 
     private static final int[] kernel5 = {
@@ -44,7 +44,7 @@ public class Blur extends MatrixFilter implements ImageTransformation {
             default -> {
                 for(int y = 0; y < size; y++) {
                     for(int x = 0; x < size; x++) {
-                        kernel.set(x, y, 1);
+                        kernel.set(x, y, 1, size);
                     }
                 }
                 return applyKernel(size, size * size, src, dst);

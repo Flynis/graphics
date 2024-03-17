@@ -29,6 +29,9 @@ public class ImageManager {
     }
 
     public void transformImage(ImageTransformation transformation) {
+        if(source == null) {
+            return;
+        }
         current = transformation.apply(buffer, current);
         isEmptyCurrent = false;
         for(var listener: listeners) {

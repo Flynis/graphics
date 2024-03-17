@@ -76,8 +76,8 @@ public class PropertiesDialog extends Dialog {
             pane.updateValue();
         }
         errorLabel.setVisible(false);
-        onConfirm.actionPerformed(null);
         hide();
+        onConfirm.actionPerformed(null);
     }
 
     protected void onCancel() {

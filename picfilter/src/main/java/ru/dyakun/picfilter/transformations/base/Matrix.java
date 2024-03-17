@@ -12,12 +12,12 @@ public class Matrix {
         this.matrix = new int[width * height];
     }
 
-    public int get(int x, int y) {
-        return matrix[y * width + x];
+    public int get(int x, int y, int size) {
+        return matrix[y * size + x];
     }
 
-    public void set(int x, int y, int val) {
-        matrix[y * width + x] = val;
+    public void set(int x, int y, int val, int size) {
+        matrix[y * size + x] = val;
     }
 
     public int getWidth() {

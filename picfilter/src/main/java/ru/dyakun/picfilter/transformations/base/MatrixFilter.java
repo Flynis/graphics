@@ -23,7 +23,7 @@ public class MatrixFilter implements ChannelProcessor {
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 int c = src.getRGB(x0 - size / 2 + x, y0 - size / 2 + y);
-                sum += ((c >> 16) & 0xFF) * kernel.get(x, y);
+                sum += ((c >> 16) & 0xFF) * kernel.get(x, y, size);
             }
         }
         return round(sum / div);
@@ -35,7 +35,7 @@ public class MatrixFilter implements ChannelProcessor {
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 int c = src.getRGB(x0 - size / 2 + x, y0 - size / 2 + y);
-                sum += ((c >> 8) & 0xFF) * kernel.get(x, y);
+                sum += ((c >> 8) & 0xFF) * kernel.get(x, y, size);
             }
         }
         return round(sum / div);
@@ -47,7 +47,7 @@ public class MatrixFilter implements ChannelProcessor {
         for(int y = 0; y < size; y++) {
             for(int x = 0; x < size; x++) {
                 int c = src.getRGB(x0 - size / 2 + x, y0 - size / 2 + y);
-                sum += (c & 0xFF) * kernel.get(x, y);
+                sum += (c & 0xFF) * kernel.get(x, y, size);
             }
         }
         return round(sum / div);
