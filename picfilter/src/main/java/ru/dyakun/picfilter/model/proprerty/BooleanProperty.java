@@ -15,6 +15,11 @@ public class BooleanProperty extends Property {
 
     public void setVal(boolean val) {
         this.val = val;
+        notify(val);
     }
 
+    @Override
+    protected Object getValue() {
+        return val;
+    }
 }

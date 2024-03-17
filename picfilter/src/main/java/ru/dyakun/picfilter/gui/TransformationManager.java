@@ -6,9 +6,11 @@ import ru.dyakun.picfilter.model.ImageTransformation;
 import ru.dyakun.picfilter.model.proprerty.Property;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.List;
 
 public class TransformationManager {
 
@@ -17,16 +19,22 @@ public class TransformationManager {
     private final Map<String, TransformStruct> transformations = new HashMap<>();
     private final List<Action> actions = new ArrayList<>();
 
-    public TransformationManager(ImageManager manager, JFrame frame) {
-        findTransformations(frame);
-        createActions(manager);
+    public TransformationManager(ImageManager manager, JFrame frame, Component panel) {
+        findTransformations(frame, manager, panel);
+        createActions(manager, panel);
+    }
+
+    private void applyTransformation(ImageManager manager, Component panel, ImageTransformation transform) {
+        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        manager.transformImage(transform);
+        panel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
     public List<Action> getActions() {
         return actions;
     }
 
-    private void findTransformations(JFrame frame) {
+    private void findTransformations(JFrame frame, ImageManager manager, Component panel) {
         Collection<Class<?>> classes = ReflectionUtil.findAllClassesInPackage("ru.dyakun.picfilter.transformations");
         System.out.println("Searching image transformations");
         for(var clazz : classes) {
@@ -43,7 +51,15 @@ public class TransformationManager {
                     }
                     properties.add((Property) field.get(transform));
                 }
-                PropertiesDialog settings = (properties.isEmpty()) ? null : new PropertiesDialog(name, frame, properties);
+                PropertiesDialog settings = null;
+                if(!properties.isEmpty()) {
+                    settings = new PropertiesDialog(name, frame, properties, new AbstractAction() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            applyTransformation(manager, panel, transform);
+                        }
+                    });
+                }
                 transformations.put(name, new TransformStruct(transform, settings));
                 System.out.println(name);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
@@ -53,7 +69,7 @@ public class TransformationManager {
         }
     }
 
-    private void createActions(ImageManager manager) {
+    private void createActions(ImageManager manager, Component panel) {
         for(var entry : transformations.entrySet()) {
             Action action = new AbstractAction() {
                 @Override
@@ -62,9 +78,8 @@ public class TransformationManager {
                     TransformStruct transform = transformations.get(name);
                     if(transform.settings != null) {
                         transform.settings.show();
-                        // TODO pass callback to settings
                     } else {
-                        manager.transformImage(transform.transform);
+                        applyTransformation(manager, panel, transform.transform);
                     }
                 }
             };

@@ -20,7 +20,6 @@ public class ImageViewer extends JPanel implements MouseListener, MouseMotionLis
         this.scrollPane.setWheelScrollingEnabled(false);
         this.scrollPane.setDoubleBuffered(true);
         this.scrollPane.setViewportView(this);
-        this.scrollPane.setBackground(Colors.DARK_BACK_COLOR);
         this.scrollPane.validate();
 
         size = getVisibleRectSize();
@@ -35,27 +34,19 @@ public class ImageViewer extends JPanel implements MouseListener, MouseMotionLis
         if (image == null) {
             g.setColor(Colors.DARK_BACK_COLOR);
             g.fillRect(0, 0, getWidth(), getHeight());
-        }
-        else {
+        } else {
             g.drawImage(image, 0, 0, size.width, size.height, null);
         }
     }
 
-    public void setImage(BufferedImage im, boolean fitScreen) {
-        image = im;
-        if (image == null) {
-            setMaxVisibleRectSize();
-            repaint();
-            revalidate();
-            return;
-        }
-
+    public void setImage(BufferedImage img, boolean fitScreen) {
+        image = img;
         Dimension newSize = new Dimension(image.getWidth(), image.getHeight());
-        if (imageSize == null) {
-            fitScreen = true;
-        } else if ((newSize.height != imageSize.height) || (newSize.width != imageSize.width)) {
-            fitScreen = true;
-        }
+//        if (imageSize == null) {
+//            fitScreen = true;
+//        } else if ((newSize.height != imageSize.height) || (newSize.width != imageSize.width)) {
+//            fitScreen = true;
+//        }
         imageSize = newSize;
 
         if (fitScreen) {
@@ -71,7 +62,7 @@ public class ImageViewer extends JPanel implements MouseListener, MouseMotionLis
             revalidate();
             scrollPane.paintAll(scrollPane.getGraphics());
         } else {
-            scrollPane.paintAll(scrollPane.getGraphics());
+            realSize();
         }
     }
 

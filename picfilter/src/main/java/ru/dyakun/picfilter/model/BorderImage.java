@@ -1,14 +1,17 @@
 package ru.dyakun.picfilter.model;
 
+import ru.dyakun.picfilter.transformations.base.TransformationUtil;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BorderImage {
 
-    public static final int BORDER_SIZE = Filter.KERNEL_SIZE_MAX / 2;
+    public static final int BORDER_SIZE = TransformationUtil.KERNEL_SIZE_MAX / 2;
     private final BufferedImage image;
     private final int width;
     private final int height;
+    private BorderType type;
 
     public BorderImage(BufferedImage src) {
         int newWidth = src.getWidth() + 2 * BORDER_SIZE;
@@ -25,6 +28,8 @@ public class BorderImage {
                 image.setRGB(x + BORDER_SIZE, y + BORDER_SIZE, c);
             }
         }
+        fillMirror();
+        type = BorderType.Mirror;
     }
 
     public int getRGB(int x, int y) {
@@ -44,9 +49,13 @@ public class BorderImage {
     }
 
     public void fillBorders(BorderType borderType) {
+        if(type == borderType) {
+            return;
+        }
         switch (borderType) {
             case Mirror -> fillMirror();
         }
+        type = borderType;
     }
 
     private void fillMirror() {

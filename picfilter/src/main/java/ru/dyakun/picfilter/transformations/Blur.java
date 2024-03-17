@@ -1,21 +1,20 @@
 package ru.dyakun.picfilter.transformations;
 
 import ru.dyakun.picfilter.model.BorderImage;
-import ru.dyakun.picfilter.model.Filter;
+import ru.dyakun.picfilter.transformations.base.MatrixFilter;
 import ru.dyakun.picfilter.model.ImageTransformation;
-import ru.dyakun.picfilter.model.Kernel;
 import ru.dyakun.picfilter.model.proprerty.IntegerProperty;
 
 import java.awt.image.BufferedImage;
 
-public class Blur implements ImageTransformation {
+public class Blur extends MatrixFilter implements ImageTransformation {
 
     public IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
 
     private static final int[] kernel3 = {
-            1, 2, 1,
-            2, 3, 2,
-            1, 2, 1 };
+            0, 1, 0,
+            2, 2, 1,
+            0, 1, 0 };
 
     private static final int[] kernel5 = {
             1,  5,  8,  5, 1,
@@ -24,20 +23,23 @@ public class Blur implements ImageTransformation {
             5, 21, 34, 21, 5,
             1,  5,  8,  5, 1 };
 
+    public Blur() {
+        super(11);
+        kernelSize.setMustBeOdd(true);
+    }
+
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
-        Kernel kernel = Filter.kernel;
         int size = kernelSize.getVal();
+        src.fillBorders(BorderImage.BorderType.Mirror);
         switch (size) {
             case 3 -> {
                 kernel.copy(kernel3);
-                kernel.setDiv(15);
-                return Filter.apply(size, src, dst);
+                return applyKernel(size, 6, src, dst);
             }
             case 5 -> {
                 kernel.copy(kernel5);
-                kernel.setDiv(351);
-                return Filter.apply(size, src, dst);
+                return applyKernel(size, 351, src, dst);
             }
             default -> {
                 for(int y = 0; y < size; y++) {
@@ -45,8 +47,7 @@ public class Blur implements ImageTransformation {
                         kernel.set(x, y, 1);
                     }
                 }
-                kernel.setDiv(size * size);
-                return Filter.apply(size, src, dst);
+                return applyKernel(size, size * size, src, dst);
             }
         }
     }

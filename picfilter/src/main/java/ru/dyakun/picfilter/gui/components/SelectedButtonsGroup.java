@@ -1,26 +1,29 @@
 package ru.dyakun.picfilter.gui.components;
 
+import ru.dyakun.picfilter.model.proprerty.PropertyListener;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectedButtonsGroup {
+public class SelectedButtonsGroup implements PropertyListener {
 
     private final List<AbstractButton> buttons = new ArrayList<>();
-    private final boolean initial;
-
-    public SelectedButtonsGroup(boolean initial) {
-        this.initial = initial;
-    }
 
     public void add(AbstractButton button) {
-        button.setSelected(initial);
         buttons.add(button);
     }
 
     public void setSelected(boolean val) {
         for(var b : buttons) {
             b.setSelected(val);
+        }
+    }
+
+    @Override
+    public void onChange(Object prop) {
+        if(prop instanceof Boolean val) {
+            setSelected(val);
         }
     }
 

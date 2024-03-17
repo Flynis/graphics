@@ -3,7 +3,6 @@ package ru.dyakun.picfilter.gui.components;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 
 public class WidgetKit {
 
@@ -22,7 +21,6 @@ public class WidgetKit {
         checkBox.setIcon(null);
         return checkBox;
     }
-
 
     public static JPanel createConfirmButtonsPane(ActionListener ok) {
         return createConfirmButtonsPane(ok, null);
