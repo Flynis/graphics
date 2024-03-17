@@ -22,20 +22,16 @@ public class TransformationUtil {
     }
 
     public static BufferedImage applyByChannels(ChannelProcessor processor,
-                                                boolean ignoreDisabledChannels,
                                                 BorderImage src,
                                                 BufferedImage dst) {
         ChannelsObserver observer = ChannelsObserver.getInstance();
-        boolean redEnabled = observer.red() || ignoreDisabledChannels;
-        boolean greenEnabled = observer.green() || ignoreDisabledChannels;
-        boolean blueEnabled = observer.blue() || ignoreDisabledChannels;
         int alpha = 0xFF;
         for(int y = 0; y < src.getHeight(); y++) {
             for(int x = 0; x < src.getWidth(); x++) {
                 int p = src.getRGB(x, y);
-                int red = redEnabled ? processor.red(x, y, src, dst) : ((p >> 16) & 0xFF);
-                int green = greenEnabled ? processor.green(x, y, src, dst) : ((p >> 8) & 0xFF);
-                int blue = blueEnabled ? processor.blue(x, y, src, dst) : (p & 0xFF);
+                int red = observer.red() ? processor.red(x, y, src, dst) : ((p >> 16) & 0xFF);
+                int green = observer.green() ? processor.green(x, y, src, dst) : ((p >> 8) & 0xFF);
+                int blue = observer.blue() ? processor.blue(x, y, src, dst) : (p & 0xFF);
                 int c = (alpha << 24) + (red << 16) + (green << 8) + blue;
                 dst.setRGB(x, y, c);
             }

@@ -46,8 +46,9 @@ public class Emboss extends MatrixFilter implements ImageTransformation {
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
+        src.fillBorders(BorderImage.BorderType.Mirror);
         fillKernel();
-        dst = applyKernel(size, 1, false, src, dst);
+        dst = applyKernel(size, 1, src, dst);
         int off = offset.getVal();
         int alpha = 0xFF;
         ChannelsObserver observer = ChannelsObserver.getInstance();

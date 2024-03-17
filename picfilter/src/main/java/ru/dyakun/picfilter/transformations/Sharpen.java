@@ -22,7 +22,8 @@ public class Sharpen extends MatrixFilter implements ImageTransformation {
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
-        return applyKernel(size, 1, false, src, dst);
+        src.fillBorders(BorderImage.BorderType.Mirror);
+        return applyKernel(size, 1, src, dst);
     }
 
 }
