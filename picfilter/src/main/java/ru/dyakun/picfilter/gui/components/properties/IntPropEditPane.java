@@ -1,4 +1,4 @@
-package ru.dyakun.picfilter.gui.components.dialog;
+package ru.dyakun.picfilter.gui.components.properties;
 
 import ru.dyakun.picfilter.model.proprerty.IntegerProperty;
 
@@ -9,7 +9,6 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.Collection;
 import java.util.List;
 
 public class IntPropEditPane implements DocumentListener, PropEditPane {

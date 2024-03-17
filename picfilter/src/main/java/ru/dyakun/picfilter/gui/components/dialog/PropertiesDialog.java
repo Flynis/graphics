@@ -3,6 +3,8 @@ package ru.dyakun.picfilter.gui.components.dialog;
 import net.miginfocom.swing.MigLayout;
 import ru.dyakun.picfilter.gui.components.Colors;
 import ru.dyakun.picfilter.gui.components.WidgetKit;
+import ru.dyakun.picfilter.gui.components.properties.PropEditPane;
+import ru.dyakun.picfilter.gui.components.properties.PropEditPaneFactory;
 import ru.dyakun.picfilter.model.proprerty.Property;
 
 import javax.swing.*;

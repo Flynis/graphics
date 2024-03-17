@@ -1,4 +1,4 @@
-package ru.dyakun.picfilter.gui.components.dialog;
+package ru.dyakun.picfilter.gui.components.properties;
 
 import java.awt.*;
 import java.util.List;

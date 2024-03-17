@@ -1,11 +1,10 @@
-package ru.dyakun.picfilter.gui.components.dialog;
+package ru.dyakun.picfilter.gui.components.properties;
 
 import ru.dyakun.picfilter.model.proprerty.BooleanProperty;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.Collection;
 import java.util.List;
 
 public class BoolPropEditPane implements PropEditPane {
@@ -42,6 +41,7 @@ public class BoolPropEditPane implements PropEditPane {
     @Override
     public void resetValue() {
         current = prop.getVal();
+        checkBox.setSelected(current);
     }
 
     @Override

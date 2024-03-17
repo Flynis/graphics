@@ -5,7 +5,7 @@ import ru.dyakun.picfilter.model.ImageTransformation;
 
 import java.awt.image.BufferedImage;
 
-public class BlackWhiteFilter implements ImageTransformation {
+public class BlackWhite implements ImageTransformation {
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {

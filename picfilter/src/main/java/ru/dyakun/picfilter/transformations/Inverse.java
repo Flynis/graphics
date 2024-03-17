@@ -6,7 +6,7 @@ import ru.dyakun.picfilter.transformations.base.TransformationUtil;
 
 import java.awt.image.BufferedImage;
 
-public class InverseFilter implements ImageTransformation, ChannelProcessor {
+public class Inverse implements ImageTransformation, ChannelProcessor {
 
     @Override
     public BufferedImage apply(BorderImage src, BufferedImage dst) {
