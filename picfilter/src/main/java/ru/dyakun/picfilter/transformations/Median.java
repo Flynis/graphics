@@ -12,7 +12,7 @@ import static ru.dyakun.picfilter.transformations.base.TransformationUtil.applyB
 
 public class Median implements ImageTransformation, ChannelProcessor {
 
-    public IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
+    public final IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
     private int[] arr;
     private int size;
 

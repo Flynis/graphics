@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class Blur extends MatrixFilter implements ImageTransformation {
 
-    public IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
+    public final IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
 
     private static final int[] kernel3 = {
             1, 2, 1,
