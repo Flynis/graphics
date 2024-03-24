@@ -19,22 +19,22 @@ public class TransformationManager {
     private final Map<String, TransformStruct> transformations = new HashMap<>();
     private final List<Action> actions = new ArrayList<>();
 
-    public TransformationManager(ImageManager manager, JFrame frame, Component panel) {
-        findTransformations(frame, manager, panel);
-        createActions(manager, panel);
+    public TransformationManager(ImageManager manager, JFrame frame) {
+        findTransformations(frame, manager);
+        createActions(manager, frame);
     }
 
-    private void applyTransformation(ImageManager manager, Component panel, ImageTransformation transform) {
-        panel.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    private void applyTransformation(ImageManager manager, JFrame frame, ImageTransformation transform) {
+        frame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         manager.transformImage(transform);
-        panel.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        frame.setCursor(Cursor.getDefaultCursor());
     }
 
     public List<Action> getActions() {
         return actions;
     }
 
-    private void findTransformations(JFrame frame, ImageManager manager, Component panel) {
+    private void findTransformations(JFrame frame, ImageManager manager) {
         Collection<Class<?>> classes = ReflectionUtil.findAllClassesInPackage("ru.dyakun.picfilter.transformations");
         System.out.println("Searching image transformations");
         for(var clazz : classes) {
@@ -56,7 +56,7 @@ public class TransformationManager {
                     settings = new PropertiesDialog(name, frame, properties, new AbstractAction() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            applyTransformation(manager, panel, transform);
+                            applyTransformation(manager, frame, transform);
                         }
                     });
                 }
@@ -69,7 +69,7 @@ public class TransformationManager {
         }
     }
 
-    private void createActions(ImageManager manager, Component panel) {
+    private void createActions(ImageManager manager, JFrame frame) {
         for(var entry : transformations.entrySet()) {
             Action action = new AbstractAction() {
                 @Override
@@ -79,7 +79,7 @@ public class TransformationManager {
                     if(transform.settings != null) {
                         transform.settings.show();
                     } else {
-                        applyTransformation(manager, panel, transform.transform);
+                        applyTransformation(manager, frame, transform.transform);
                     }
                 }
             };

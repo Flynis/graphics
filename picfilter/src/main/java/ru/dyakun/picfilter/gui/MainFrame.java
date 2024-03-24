@@ -9,6 +9,7 @@ import ru.dyakun.picfilter.model.ImageManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class MainFrame extends JFrame {
@@ -22,6 +23,7 @@ public class MainFrame extends JFrame {
         createUI();
         setPreferredSize(new Dimension(1600, 900));
         setMinimumSize(new Dimension(640, 480));
+        enableEvents(MouseEvent.MOUSE_CLICKED);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -37,7 +39,7 @@ public class MainFrame extends JFrame {
 
         ImageViewer viewer = new ImageViewer(scrollPane);
         ImageController controller = new ImageController(viewer, imageManager);
-        TransformationManager transformationManager = new TransformationManager(imageManager, this, scrollPane);
+        TransformationManager transformationManager = new TransformationManager(imageManager, this);
 
         ActionKit actionKit = new ActionKit();
 
