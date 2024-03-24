@@ -13,7 +13,7 @@ public class Sharpen extends MatrixFilter implements ImageTransformation {
             -1,  9, -1,
             -1, -1, -1 };
 
-    private static final int size = 3;
+    protected static final int size = 3;
 
     public Sharpen() {
         super(size);

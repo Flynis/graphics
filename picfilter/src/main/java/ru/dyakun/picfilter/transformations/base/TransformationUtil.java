@@ -22,9 +22,7 @@ public class TransformationUtil {
     }
 
     public static int palette(int c, int n) {
-        int divisor = 255 / (n - 1);
-        int p = c / divisor;
-        return (c % divisor > divisor / 2) ? (p + 1) * divisor : p * divisor;
+        return c - (c % (255 / n));
     }
 
     public static BufferedImage applyByChannels(ChannelProcessor processor,

@@ -7,8 +7,7 @@ import ru.dyakun.picfilter.transformations.base.ChannelProcessor;
 
 import java.awt.image.BufferedImage;
 
-import static ru.dyakun.picfilter.transformations.base.TransformationUtil.applyByChannels;
-import static ru.dyakun.picfilter.transformations.base.TransformationUtil.round;
+import static ru.dyakun.picfilter.transformations.base.TransformationUtil.*;
 
 public class OrderedDithering implements ImageTransformation, ChannelProcessor {
 
@@ -89,19 +88,22 @@ public class OrderedDithering implements ImageTransformation, ChannelProcessor {
     @Override
     public int red(int x, int y, BorderImage src, BufferedImage dst) {
         int p = (src.getRGB(x, y) >> 16) & 0xFF;
-        return round((int) Math.round(p + redDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5)));
+        double v = p + redDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5);
+        return palette((int) Math.round(v), red.getVal());
     }
 
     @Override
     public int green(int x, int y, BorderImage src, BufferedImage dst) {
         int p = (src.getRGB(x, y) >> 8) & 0xFF;
-        return round((int) Math.round(p + greenDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5)));
+        double v = p + greenDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5);
+        return palette((int) Math.round(v), green.getVal());
     }
 
     @Override
     public int blue(int x, int y, BorderImage src, BufferedImage dst) {
         int p = src.getRGB(x, y) & 0xFF;
-        return round((int) Math.round(p + blueDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5)));
+        double v = p + blueDispersion * (m[(y % n) * n + (x % n)] / (double)m.length - 0.5);
+        return palette((int) Math.round(v), blue.getVal());
     }
 
 }
