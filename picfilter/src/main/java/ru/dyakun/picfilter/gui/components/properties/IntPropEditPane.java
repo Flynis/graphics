@@ -43,7 +43,7 @@ public class IntPropEditPane implements DocumentListener, PropEditPane {
         field.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!((c >= '0') && (c <= '9') ||
+                if (!((c >= '0') && (c <= '9') || c == '-' ||
                         (c == KeyEvent.VK_BACK_SPACE) ||
                         (c == KeyEvent.VK_DELETE))) {
                     e.consume();

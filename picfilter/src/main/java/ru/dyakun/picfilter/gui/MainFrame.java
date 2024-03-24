@@ -130,6 +130,10 @@ public class MainFrame extends JFrame {
         viewMenu.add(interpolation);
         toolBar.add(interpolation);
 
+        Action rotate = actionKit.createRotateAction(imageManager, this);
+        viewMenu.add(rotate);
+        toolBar.add(rotate);
+
         toolBar.add(new JToolBar.Separator());
         return viewMenu;
     }

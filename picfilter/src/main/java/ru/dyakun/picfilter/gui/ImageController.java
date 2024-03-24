@@ -70,7 +70,7 @@ public class ImageController implements ImageListener, MouseListener, PropertyLi
     public void onChange(BufferedImage image) {
         fitScreen.setVal(false);
         showSource.setVal(false);
-        viewer.setImage(manager.getCurrent(), fitScreen.getVal());
+        viewer.setImage(image, fitScreen.getVal());
     }
 
     @Override

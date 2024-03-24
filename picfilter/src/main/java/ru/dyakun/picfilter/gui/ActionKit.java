@@ -4,6 +4,7 @@ import ru.dyakun.picfilter.gui.components.dialog.AboutDialog;
 import ru.dyakun.picfilter.gui.components.dialog.PropertiesDialog;
 import ru.dyakun.picfilter.model.ChannelsObserver;
 import ru.dyakun.picfilter.model.ImageManager;
+import ru.dyakun.picfilter.model.proprerty.IntegerProperty;
 
 import javax.swing.*;
 import java.awt.*;
@@ -190,6 +191,25 @@ public class ActionKit {
             }
         };
         initAction(action, "Blue channel", createIcon(Color.blue));
+        return action;
+    }
+
+    public Action createRotateAction(ImageManager manager, JFrame frame) {
+        String name = "Rotate image";
+        IntegerProperty degrees = new IntegerProperty(90, -180, 180, "Rotate");
+        PropertiesDialog rotateDialog = new PropertiesDialog(name, frame, List.of(degrees), new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                manager.rotate(degrees.getVal());
+            }
+        });
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                rotateDialog.show();
+            }
+        };
+        initAction(action, name, "/icons/rotate.png");
         return action;
     }
 
