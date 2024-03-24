@@ -12,16 +12,16 @@ public class Blur extends MatrixFilter implements ImageTransformation {
     public IntegerProperty kernelSize = new IntegerProperty(3, 3, 11, "Kernel size");
 
     private static final int[] kernel3 = {
-            0, 1, 0,
             1, 2, 1,
-            0, 1, 0 };
+            2, 4, 2,
+            1, 2, 1 };
 
     private static final int[] kernel5 = {
-            1,  5,  8,  5, 1,
-            5, 21, 34, 21, 5,
-            8, 34, 55, 34, 8,
-            5, 21, 34, 21, 5,
-            1,  5,  8,  5, 1 };
+            1,  4,  7,  4, 1,
+            4, 16, 26, 16, 4,
+            7, 26, 41, 26, 7,
+            4, 16, 26, 16, 4,
+            1,  4,  7,  4, 1 };
 
     public Blur() {
         super(11);
@@ -35,11 +35,11 @@ public class Blur extends MatrixFilter implements ImageTransformation {
         switch (size) {
             case 3 -> {
                 kernel.copy(kernel3);
-                return applyKernel(size, 6, src, dst);
+                return applyKernel(size, 16, src, dst);
             }
             case 5 -> {
                 kernel.copy(kernel5);
-                return applyKernel(size, 351, src, dst);
+                return applyKernel(size, 273, src, dst);
             }
             default -> {
                 for(int y = 0; y < size; y++) {
