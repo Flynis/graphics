@@ -1,12 +1,14 @@
 package ru.dyakun.picfilter.gui;
 
 import ru.dyakun.picfilter.gui.components.dialog.AboutDialog;
+import ru.dyakun.picfilter.gui.components.dialog.PropertiesDialog;
 import ru.dyakun.picfilter.model.ChannelsObserver;
 import ru.dyakun.picfilter.model.ImageManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 
@@ -136,9 +138,17 @@ public class ActionKit {
         return action;
     }
 
-    public Action createFitScreenSettings() {
-        // TODO
-        return null;
+    public Action createInterpolationModeAction(ImageController controller, JFrame frame) {
+        var prop = controller.getInterpolationMode();
+        var settings = new PropertiesDialog(prop.getName(), frame, List.of(prop), null);
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                settings.show();
+            }
+        };
+        initAction(action, "Interpolation settings", "/icons/settings.png");
+        return action;
     }
 
     public Action createRedChannelAction() {

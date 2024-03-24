@@ -126,7 +126,9 @@ public class MainFrame extends JFrame {
         group = insertToggleButton(viewMenu, toolBar, showSource);
         controller.addSourceModeListener(group);
 
-        // TODO setting btn
+        Action interpolation = actionKit.createInterpolationModeAction(controller, this);
+        viewMenu.add(interpolation);
+        toolBar.add(interpolation);
 
         toolBar.add(new JToolBar.Separator());
         return viewMenu;

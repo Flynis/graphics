@@ -47,7 +47,7 @@ public class PropertiesDialog extends Dialog {
                 }
                 case 2 -> {
                     grid.add(components.get(0));
-                    grid.add(components.get(1), "wrap");
+                    grid.add(components.get(1), "wrap, growx");
                 }
             }
         }
@@ -79,7 +79,9 @@ public class PropertiesDialog extends Dialog {
         }
         errorLabel.setVisible(false);
         hide();
-        onConfirm.actionPerformed(null);
+        if(onConfirm != null) {
+            onConfirm.actionPerformed(null);
+        }
     }
 
     protected void onCancel() {

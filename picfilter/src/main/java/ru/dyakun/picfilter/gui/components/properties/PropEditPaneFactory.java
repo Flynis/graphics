@@ -1,9 +1,6 @@
 package ru.dyakun.picfilter.gui.components.properties;
 
-import ru.dyakun.picfilter.model.proprerty.BooleanProperty;
-import ru.dyakun.picfilter.model.proprerty.DoubleProperty;
-import ru.dyakun.picfilter.model.proprerty.IntegerProperty;
-import ru.dyakun.picfilter.model.proprerty.Property;
+import ru.dyakun.picfilter.model.proprerty.*;
 
 public class PropEditPaneFactory {
 
@@ -18,6 +15,8 @@ public class PropEditPaneFactory {
             return new BoolPropEditPane(booleanProp);
         } else if(prop instanceof DoubleProperty doubleProp) {
             return new DoublePropEditPane(doubleProp);
+        } else if(prop instanceof EnumProperty enumProp) {
+            return new EnumPropEditPane(enumProp);
         } else {
             throw new IllegalArgumentException("Unknown property class");
         }
