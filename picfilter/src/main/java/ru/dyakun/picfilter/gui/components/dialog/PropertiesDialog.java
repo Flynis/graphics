@@ -26,7 +26,8 @@ public class PropertiesDialog extends Dialog {
         if(properties.isEmpty()) {
             throw new IllegalArgumentException("No properties for dialog");
         }
-        dialog.setMinimumSize(new Dimension(400, properties.size() * 30 + 50));
+        errorLabel.setMinimumSize(new Dimension(60, 20));
+        dialog.setMinimumSize(new Dimension(200, properties.size() * 20 + 30));
         dialog.setResizable(false);
 
         JPanel buttons = WidgetKit.createConfirmButtonsPane(e -> onOk(), e -> onCancel());
@@ -34,21 +35,17 @@ public class PropertiesDialog extends Dialog {
         JPanel gridPanel = new JPanel(new BorderLayout());
         gridPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        JPanel grid = new JPanel(new MigLayout("fillx, wrap 3", "[right]5[50, fill]5[grow,fill]", ""));
+        JPanel grid = new JPanel(new MigLayout("fillx", "5[center]5", "5[]5"));
         for(var prop: properties) {
             PropEditPane editPane = PropEditPaneFactory.create(prop);
             editPanes.add(editPane);
             var components = editPane.getComponents();
-            switch (components.size()) {
-                case 3 -> {
-                    for(var c : components) {
-                        grid.add(c);
-                    }
-                }
-                case 2 -> {
-                    grid.add(components.get(0));
-                    grid.add(components.get(1), "wrap, growx");
-                }
+            grid.add(components.get(0), "align right");
+            if(components.size() == 2) {
+                grid.add(components.get(1), "wrap, growx, wmin 60");
+            } else {
+                grid.add(components.get(1), "growx");
+                grid.add(components.get(2), "wrap, wmin 60");
             }
         }
         gridPanel.add(grid);

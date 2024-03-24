@@ -47,6 +47,7 @@ public class BorderImage {
     public enum BorderType {
         Mirror,
         Zero,
+        Repeat
     }
 
     public void fillBorders(BorderType borderType) {
@@ -56,6 +57,7 @@ public class BorderImage {
         switch (borderType) {
             case Mirror -> fillMirror();
             case Zero -> fillZero();
+            case Repeat -> fillRepeat();
         }
         type = borderType;
     }
@@ -95,6 +97,29 @@ public class BorderImage {
                 // right bottom
                 c = image.getRGB(width + x, height + BORDER_SIZE + y);
                 image.setRGB(image.getWidth() - x - 1, height + BORDER_SIZE + y, c);
+            }
+        }
+    }
+
+    private void fillRepeat() {
+        for(int y = 0; y < BORDER_SIZE; y++) {
+            for(int x = BORDER_SIZE; x < width + BORDER_SIZE; x++) {
+                // upper
+                int c = image.getRGB(x, BORDER_SIZE);
+                image.setRGB(x, y, c);
+                // lower
+                c = image.getRGB(x, image.getHeight() - BORDER_SIZE - 1);
+                image.setRGB(x, image.getHeight() - y - 1, c);
+            }
+        }
+        for(int y = BORDER_SIZE; y < height + BORDER_SIZE; y++) {
+            for(int x = 0; x < BORDER_SIZE; x++) {
+                // left
+                int c = image.getRGB(BORDER_SIZE, y);
+                image.setRGB(x, y, c);
+                // right
+                c = image.getRGB(image.getWidth() - BORDER_SIZE - 1, y);
+                image.setRGB(image.getWidth() - x - 1, y, c);
             }
         }
     }

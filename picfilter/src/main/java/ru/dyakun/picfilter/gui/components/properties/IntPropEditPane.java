@@ -73,7 +73,7 @@ public class IntPropEditPane implements DocumentListener, PropEditPane {
 
     @Override
     public List<Component> getComponents() {
-        return List.of(label, field, slider);
+        return List.of(label, slider, field);
     }
 
     @Override
