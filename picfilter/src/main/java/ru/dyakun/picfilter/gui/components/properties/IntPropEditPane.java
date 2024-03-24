@@ -107,7 +107,7 @@ public class IntPropEditPane implements DocumentListener, PropEditPane {
     private void onTextFieldChanged() {
         if (!updatingValue) {
             String text = field.getText();
-            int val = text.isEmpty() ? prop.getMin() : Integer.parseInt(text);
+            int val = (text.isEmpty() || text.trim().equals("-")) ? prop.getMin() : Integer.parseInt(text);
             setValue(val, field);
         }
     }

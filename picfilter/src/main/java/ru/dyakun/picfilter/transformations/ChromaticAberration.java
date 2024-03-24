@@ -12,9 +12,11 @@ public class ChromaticAberration implements ImageTransformation {
     public final IntegerProperty green = new IntegerProperty(4, -128, 128, "Green");
     public final IntegerProperty blue = new IntegerProperty(2, -128, 128, "Blue");
 
-    private int signedRemainder(int idx, int w) {
-        int remainder = idx % w;
-        return (idx < 0) ? w + remainder : remainder;
+    private int cutOutOfRange(int idx, int w) {
+        if(idx < 0) {
+            return 0;
+        }
+        return Math.min(idx, w - 1);
     }
 
     @Override
@@ -23,15 +25,17 @@ public class ChromaticAberration implements ImageTransformation {
         int w = src.getWidth();
         int h = src.getHeight();
         int alpha = 0xFF;
-        for(int i = 0; i < w * h; i++) {
-            int idx = i + red.getVal();
-            int rc = ((src.getRGB(signedRemainder(idx, w), idx / w) >> 16) & 0xFF);
-            idx = i + green.getVal();
-            int gc = ((src.getRGB(signedRemainder(idx, w), idx / w) >> 8) & 0xFF);
-            idx = i + blue.getVal();
-            int bc = (src.getRGB(signedRemainder(idx, w), idx / w) & 0xFF);
-            int c = (alpha << 24) + (rc << 16) + (gc << 8) + bc;
-            dst.setRGB(i % w, i / w, c);
+        for(int y = 0; y < h; y++) {
+            for(int x = 0; x < w; x++) {
+                int idx = x + red.getVal();
+                int rc = ((src.getRGB(cutOutOfRange(idx, w), y) >> 16) & 0xFF);
+                idx = x + green.getVal();
+                int gc = ((src.getRGB(cutOutOfRange(idx, w), y) >> 8) & 0xFF);
+                idx = x + blue.getVal();
+                int bc = (src.getRGB(cutOutOfRange(idx, w), y) & 0xFF);
+                int c = (alpha << 24) + (rc << 16) + (gc << 8) + bc;
+                dst.setRGB(x, y, c);
+            }
         }
         return dst;
     }

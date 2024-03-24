@@ -28,7 +28,7 @@ public class IntegerFilter extends DocumentFilter {
             Integer.parseInt(text);
             return true;
         } catch (NumberFormatException e) {
-            return false;
+            return text.trim().equals("-");
         }
     }
 
